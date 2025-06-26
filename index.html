@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seismic By Engr. Alnajer H. Sailama</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+        .ref-table th, .ref-table td {
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .ref-table tr:last-child td {
+            border-bottom: none;
+        }
+        .ref-table thead {
+            background-color: #f9fafb;
+            color: #374151;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+        }
+        .input-field {
+            width: 100%;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-field:focus {
+            --tw-ring-color: #2563eb;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px var(--tw-ring-color);
+            outline: none;
+        }
+        .radio-label {
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .radio-label:has(input:checked) {
+            background-color: #eff6ff;
+            border-color: #2563eb;
+            color: #2563eb;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-200 text-gray-900 flex items-center justify-center min-h-screen">
+
+    <main id="main-app" class="container mx-auto p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-800">Seismic By Engr. Alnajer H. Sailama</h1>
+            <p class="text-md text-slate-500 mt-2">NSCP 2015 - Static, Detailed & Dynamic Procedures</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div class="lg:col-span-3 space-y-8">
+                <!-- Seismic Parameters Card -->
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center">Seismic Parameters (Manual Input)</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="seismicZone" class="block text-sm font-medium text-gray-700 mb-1">Seismic Zone (Z)</label>
+                            <select id="seismicZone" class="input-field">
+                                <option value="0.2">Zone 2</option>
+                                <option value="0.4" selected>Zone 4</option>
+                            </select>
+                        </div>
+                        <div>
+                           <label for="importanceFactor" class="block text-sm font-medium text-gray-700 mb-1">Occupancy (I)</label>
+                           <select id="importanceFactor" class="input-field">
+                               <option value="1.5">I. Essential</option>
+                               <option value="1.25">II. Hazardous</option>
+                               <option value="1.0" selected>IV. Standard</option>
+                               <option value="1.0">V. Miscellaneous</option>
+                           </select>
+                        </div>
+                        <div>
+                            <label for="responseModification" class="block text-sm font-medium text-gray-700 mb-1">Structural System (R)</label>
+                            <select id="responseModification" class="input-field">
+                                <option value="8.5">Special RC Moment Frame</option>
+                                <option value="6.5" selected>RC Shear Walls System</option>
+                                <option value="5.5">Intermediate RC Moment Frame</option>
+                                <option value="8.0">Special Steel Moment Frame</option>
+                                <option value="7.0">Steel Eccentrically Braced Frame</option>
+                                <option value="3.5">OMRF</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="period_t" class="block text-sm font-medium text-gray-700 mb-1">Structure Period, T (s)</label>
+                            <input type="number" id="period_t" class="input-field" placeholder="e.g., 0.850">
+                        </div>
+                         <div>
+                            <label for="factor_na" class="block text-sm font-medium text-gray-700 mb-1">Near-Source Factor, Nₐ</label>
+                            <input type="number" id="factor_na" class="input-field" placeholder="e.g., 1.0">
+                        </div>
+                         <div>
+                            <label for="factor_nv" class="block text-sm font-medium text-gray-700 mb-1">Near-Source Factor, Nᵥ</label>
+                            <input type="number" id="factor_nv" class="input-field" placeholder="e.g., 1.0">
+                        </div>
+                        <div>
+                            <label for="coeff_ca" class="block text-sm font-medium text-gray-700 mb-1">Seismic Coefficient, Cₐ</label>
+                            <input type="number" id="coeff_ca" class="input-field" placeholder="e.g., 0.44">
+                        </div>
+                         <div>
+                            <label for="coeff_cv" class="block text-sm font-medium text-gray-700 mb-1">Seismic Coefficient, Cᵥ</label>
+                            <input type="number" id="coeff_cv" class="input-field" placeholder="e.g., 0.64">
+                        </div>
+                    </div>
+                     <div id="dynamic_inputs" class="hidden mt-6 pt-4 border-t border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Dynamic Analysis Parameters</h3>
+                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="dynamic_base_shear" class="block text-sm font-medium text-gray-700 mb-1">Base Shear from Software (Vb)</label>
+                                <input type="number" id="dynamic_base_shear" class="input-field" placeholder="e.g., 5000">
+                            </div>
+                            <div>
+                                <label for="regularity" class="block text-sm font-medium text-gray-700 mb-1">Structural Regularity</label>
+                                <select id="regularity" class="input-field">
+                                    <option value="0.9">Regular Structure</option>
+                                    <option value="1.0">Irregular Structure</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Building Data Card -->
+                <div class="card">
+                    <h2 class="text-xl font-semibold mb-4 flex items-center">Building Data</h2>
+                     <div class="space-y-3" id="story-data-container"></div>
+                    <button onclick="addStory()" class="mt-4 text-sm font-medium text-blue-600 hover:text-blue-800 transition">+ Add Story Level</button>
+                    <div id="building_summary" class="mt-4 pt-4 border-t border-gray-200 space-y-2 text-sm">
+                        <div class="flex justify-between font-medium">
+                            <span>Total Seismic Weight (W):</span>
+                            <span id="total_weight_display" class="text-blue-600">0.00 kN</span>
+                        </div>
+                        <div class="flex justify-between font-medium">
+                            <span>Total Building Height (hₙ):</span>
+                            <span id="total_height_display" class="text-blue-600">0.00 m</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <div class="sticky top-8">
+                    <div class="card">
+                         <label class="block text-sm font-medium text-gray-700 mb-2">Calculation Procedure</label>
+                         <div class="flex gap-3">
+                             <label class="radio-label flex-1 text-center"><input type="radio" name="procedure" value="simplified" class="sr-only" onchange="toggleDetailedInputs()" checked>Simplified</label>
+                             <label class="radio-label flex-1 text-center"><input type="radio" name="procedure" value="detailed" class="sr-only" onchange="toggleDetailedInputs()">Detailed</label>
+                             <label class="radio-label flex-1 text-center"><input type="radio" name="procedure" value="dynamic" class="sr-only" onchange="toggleDetailedInputs()">Dynamic</label>
+                         </div>
+                        <button onclick="calculateSeismicForces()" class="w-full btn-primary text-lg mt-6">Calculate Forces</button>
+                    </div>
+                    
+                    <div id="results_section" class="mt-8 hidden">
+                         <div id="base_shear_results" class="card"></div>
+                         <div id="lateral_force_results" class="card mt-8"></div>
+                         <div id="detailed_calculation_breakdown" class="card mt-8 hidden"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reference Tables Card -->
+        <div class="mt-8 max-w-5xl mx-auto">
+            <div class="card">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">NSCP 2015 Reference Tables</h2>
+                <div class="space-y-8 text-sm">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><h3 class="font-semibold mb-2">Table 208-1: Importance Factors (I)</h3><table class="w-full ref-table"><thead><tr><th>Occupancy</th><th>I</th></tr></thead><tbody><tr><td>I. Essential</td><td>1.50</td></tr><tr><td>II. Hazardous</td><td>1.25</td></tr><tr><td>IV. Standard</td><td>1.00</td></tr><tr><td>V. Miscellaneous</td><td>1.00</td></tr></tbody></table></div><div><h3 class="font-semibold mb-2">Table 208-3: Zone Factor (Z)</h3><table class="w-full ref-table"><thead><tr><th>Zone</th><th>Z</th></tr></thead><tbody><tr><td>2</td><td>0.20</td></tr><tr><td>4</td><td>0.40</td></tr></tbody></table></div></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><h3 class="font-semibold mb-2">Table 208-2: Soil Profile Types</h3><table class="w-full ref-table"><thead><tr><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>SA</td><td>Hard Rock</td></tr><tr><td>SB</td><td>Rock</td></tr><tr><td>SC</td><td>Very Dense Soil/Soft Rock</td></tr><tr><td>SD</td><td>Stiff Soil</td></tr><tr><td>SE</td><td>Soft Soil</td></tr><tr><td>SF</td><td>Requires specific evaluation</td></tr></tbody></table></div><div><h3 class="font-semibold mb-2">Table 208-4: Seismic Source Types</h3><table class="w-full ref-table"><thead><tr><th>Type</th><th>Max. Moment, M</th></tr></thead><tbody><tr><td>A</td><td>7.0 ≤ M ≤ 8.4</td></tr><tr><td>B</td><td>6.5 ≤ M < 7.0</td></tr><tr><td>C</td><td>M < 6.5</td></tr></tbody></table></div></div>
+                    <div><h3 class="font-semibold mb-2">Tables 208-5 & 208-6: Near-Source Factors</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><table class="w-full ref-table"><thead><tr><th colspan="3">Nₐ</th></tr><tr><th>Source</th><th>≤ 5km</th><th>≥ 10km</th></tr></thead><tbody><tr><td>A</td><td>1.2</td><td>1.0</td></tr><tr><td>B</td><td>1.0</td><td>1.0</td></tr><tr><td>C</td><td>1.0</td><td>1.0</td></tr></tbody></table><table class="w-full ref-table"><thead><tr><th colspan="4">Nᵥ</th></tr><tr><th>Source</th><th>≤ 5km</th><th>10km</th><th>≥ 15km</th></tr></thead><tbody><tr><td>A</td><td>1.6</td><td>1.2</td><td>1.0</td></tr><tr><td>B</td><td>1.2</td><td>1.0</td><td>1.0</td></tr><tr><td>C</td><td>1.0</td><td>1.0</td><td>1.0</td></tr></tbody></table></div></div>
+                    <div><h3 class="font-semibold mb-2">Tables 208-7 & 208-8: Seismic Coefficients</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><table class="w-full ref-table"><thead><tr><th colspan="3">Cₐ (base value)</th></tr><tr><th>Soil</th><th>Zone 2</th><th>Zone 4</th></tr></thead><tbody><tr><td>SA</td><td>0.16</td><td>0.32</td></tr><tr><td>SB</td><td>0.20</td><td>0.40</td></tr><tr><td>SC</td><td>0.24</td><td>0.40</td></tr><tr><td>SD</td><td>0.28</td><td>0.44</td></tr><tr><td>SE</td><td>0.34</td><td>0.44</td></tr></tbody></table><table class="w-full ref-table"><thead><tr><th colspan="3">Cᵥ (base value)</th></tr><tr><th>Soil</th><th>Zone 2</th><th>Zone 4</th></tr></thead><tbody><tr><td>SA</td><td>0.16</td><td>0.32</td></tr><tr><td>SB</td><td>0.20</td><td>0.40</td></tr><tr><td>SC</td><td>0.32</td><td>0.56</td></tr><tr><td>SD</td><td>0.40</td><td>0.64</td></tr><tr><td>SE</td><td>0.64</td><td>0.96</td></tr></tbody></table></div></div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Formula for Approximate Period (Method A)</h3>
+                        <div class="p-3 bg-gray-100 rounded-lg text-center font-mono tracking-wider">
+                            T = Cₜ * (hₙ)¾
+                        </div>
+                    </div>
+                    <div><h3 class="font-semibold mb-2">Table for Building Period Coeff. (Cₜ)</h3><table class="w-full ref-table"><thead><tr><th>Structural System</th><th>Cₜ</th></tr></thead><tbody><tr><td>Steel moment-resisting frames</td><td>0.0853</td></tr><tr><td>RC moment-resisting frames & eccentrically braced frames</td><td>0.0731</td></tr><tr><td>All other buildings</td><td>0.0488</td></tr></tbody></table></div>
+                    <div><h3 class="font-semibold mb-2">Table 208-11: Response Modification Coeff. (R)</h3><table class="w-full ref-table"><thead><tr><th>Basic Structural System</th><th>R</th></tr></thead><tbody><tr><td class="font-medium bg-gray-50" colspan="2">A. Bearing Wall System</td></tr><tr><td>Special reinforced concrete shear walls</td><td>5.5</td></tr><tr><td>Ordinary reinforced concrete shear walls</td><td>4.5</td></tr><tr><td class="font-medium bg-gray-50" colspan="2">B. Building Frame System</td></tr><tr><td>Special steel eccentrically braced frames (EBF)</td><td>7.0</td></tr><tr><td>Special reinforced concrete shear walls</td><td>6.5</td></tr><tr><td class="font-medium bg-gray-50" colspan="2">C. Moment-Resisting Frame System</td></tr><tr><td>Special steel moment frames (SMRF)</td><td>8.0</td></tr><tr><td>Special reinforced concrete moment frames (SMRF)</td><td>8.5</td></tr><tr><td>Intermediate reinforced concrete moment frames (IMRF)</td><td>5.5</td></tr><tr><td>Ordinary reinforced concrete moment frames (OMRF)</td><td>3.5</td></tr></tbody></table></div>
+                     <div><h3 class="font-semibold mb-2">When to Use Dynamic Analysis (Sec. 208.4.8.3)</h3><table class="w-full ref-table"><thead><tr><th>Condition</th></tr></thead><tbody><tr><td>Structures 75m or more in height.</td></tr><tr><td>Structures with vertical irregularities (Stiffness, Weight, Geometric).</td></tr><tr><td>Structures over 5 stories or 20m in height in Zone 4 that don't have the same structural system throughout their height.</td></tr><tr><td>Structures, regular or irregular, on Soil Profile Type SF that have a period greater than 0.7 seconds.</td></tr></tbody></table></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-12 text-sm text-slate-500">
+            <p>Designed by Engr. Alnajer H. Sailama</p>
+            <p class="mt-1">Disclaimer: This calculator is for educational purposes only. All designs must be verified by a licensed professional engineer.</p>
+        </footer>
+    </main>
+
+    <script>
+        function initializeApp() {
+            addStory('2500', '3.5');
+            addStory('2000', '3.5');
+            toggleDetailedInputs();
+            updateBuildingSummary();
+        }
+
+        window.onload = initializeApp;
+
+        let storyCount = 0;
+        function addStory(weight = '', height = '') {
+            storyCount++;
+            const container = document.getElementById('story-data-container');
+            const newStoryDiv = document.createElement('div');
+            newStoryDiv.id = `story-row-${storyCount}`;
+            newStoryDiv.className = 'flex items-center gap-3 p-3 bg-gray-50 rounded-lg';
+            newStoryDiv.innerHTML = `<div class="font-semibold text-gray-600 bg-gray-200 h-10 w-10 flex items-center justify-center rounded-full flex-shrink-0">${storyCount}</div><div class="flex-grow"><label class="text-xs text-gray-500">Weight, wₓ (kN)</label><input type="number" value="${weight}" class="story-weight input-field !p-2 text-sm" placeholder="e.g., 2000" oninput="updateBuildingSummary()"></div><div class="flex-grow"><label class="text-xs text-gray-500">Height, hₓ (m)</label><input type="number" value="${height}" class="story-height input-field !p-2 text-sm" placeholder="e.g., 3.5" oninput="updateBuildingSummary()"></div><button onclick="removeStory(${storyCount})" class="text-red-500 hover:bg-red-100 rounded-full p-1.5 transition"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button>`;
+            container.appendChild(newStoryDiv);
+            updateStoryNumbers(); updateBuildingSummary();
+        }
+        function removeStory(id) { document.getElementById(`story-row-${id}`).remove(); updateStoryNumbers(); updateBuildingSummary(); }
+        function updateStoryNumbers() {
+            const storyDivs = document.querySelectorAll('#story-data-container > div');
+            storyDivs.forEach((div, index) => { div.querySelector('.font-semibold').textContent = index + 1; });
+            storyCount = storyDivs.length;
+        }
+
+        function updateBuildingSummary() {
+            let totalWeight = 0, totalHeight = 0;
+            const weightInputs = document.querySelectorAll('.story-weight');
+            const heightInputs = document.querySelectorAll('.story-height');
+            for (let i = 0; i < weightInputs.length; i++) {
+                totalWeight += parseFloat(weightInputs[i].value) || 0;
+                totalHeight += parseFloat(heightInputs[i].value) || 0;
+            }
+            document.getElementById('total_weight_display').textContent = `${totalWeight.toFixed(2)} kN`;
+            document.getElementById('total_height_display').textContent = `${totalHeight.toFixed(2)} m`;
+        }
+        
+        function toggleDetailedInputs() {
+            const procedure = document.querySelector('input[name="procedure"]:checked').value;
+            const dynamicInputs = document.getElementById('dynamic_inputs');
+            if (procedure === 'dynamic') {
+                dynamicInputs.classList.remove('hidden');
+            } else {
+                dynamicInputs.classList.add('hidden');
+            }
+        }
+
+        function calculateSeismicForces() {
+            const procedure = document.querySelector('input[name="procedure"]:checked').value;
+            
+            const I = parseFloat(document.getElementById('importanceFactor').value);
+            const R = parseFloat(document.getElementById('responseModification').value);
+            
+            const stories = [];
+            let totalWeight = 0, totalHeight = 0;
+            const weightInputs = document.querySelectorAll('.story-weight');
+            const heightInputs = document.querySelectorAll('.story-height');
+            if (weightInputs.length === 0) { alert('Please add at least one story.'); return; }
+            for (let i = 0; i < weightInputs.length; i++) {
+                const w = parseFloat(weightInputs[i].value); const h = parseFloat(heightInputs[i].value);
+                if (isNaN(w) || isNaN(h) || w <= 0 || h <= 0) { alert('Please enter valid story weights and heights.'); return; }
+                totalWeight += w; totalHeight += h;
+                stories.push({ level: i + 1, w, h });
+            }
+
+            let V, Ft=0, governingEq = '', V_main=0, V_max=0, V_min1=0, V_min2=0, V_static=0, scaleFactor=1;
+            
+            const Z = parseFloat(document.getElementById('seismicZone').value);
+            const Na = parseFloat(document.getElementById('factor_na').value);
+            const Nv = parseFloat(document.getElementById('factor_nv').value);
+            const Ca = parseFloat(document.getElementById('coeff_ca').value);
+            const Cv = parseFloat(document.getElementById('coeff_cv').value);
+            const T = parseFloat(document.getElementById('period_t').value);
+
+            if (procedure === 'simplified') {
+                if (isNaN(Ca)) { alert("Please enter a value for Seismic Coefficient, Ca."); return; }
+                 if (stories.length > 2) {
+                    alert("Warning: The Simplified Static Procedure is generally applicable for buildings not exceeding 2 stories in height (or 3 for light-frame). Please verify applicability per NSCP 208.4.8.1.");
+                }
+                V = (3.0 * Ca * I / R) * totalWeight;
+                governingEq = 'Simplified Eq. 208-12';
+            } else { // Detailed or Dynamic
+                if (isNaN(Ca) || isNaN(Cv) || isNaN(T) || isNaN(Na) || isNaN(Nv)) {
+                    alert('Please enter all required seismic parameters for detailed calculation.');
+                    return;
+                }
+                V_main = (Cv * I / (R * T)) * totalWeight;
+                V_max = (2.5 * Ca * I / R) * totalWeight;
+                V_min1 = (0.11 * Ca * I) * totalWeight;
+                
+                let V_temp = Math.max(V_main, V_min1);
+                
+                if (Z === 0.4) {
+                    V_min2 = (0.8 * Z * Nv * I / R) * totalWeight;
+                    if(V_min2 > V_temp) { V_temp = V_min2; }
+                }
+                
+                if (V_temp > V_max) { V_temp = V_max; }
+                
+                V_static = V_temp; 
+
+                if(procedure === 'detailed') {
+                    V = V_static;
+                    governingEq = 'See Detailed Breakdown';
+                } else { // Dynamic
+                    const Vb = parseFloat(document.getElementById('dynamic_base_shear').value);
+                    const regularity_factor = parseFloat(document.getElementById('regularity').value);
+                    if(isNaN(Vb)) { alert("Please enter the Base Shear from your software."); return; }
+
+                    const V_min_dynamic = regularity_factor * V_static;
+                    
+                    if (Vb < V_min_dynamic) {
+                        scaleFactor = V_min_dynamic / Vb;
+                        V = Vb * scaleFactor;
+                        governingEq = `Scaled to ${regularity_factor*100}% of Static V`;
+                    } else {
+                        V = Vb;
+                        governingEq = 'From Software (No scaling needed)';
+                    }
+                }
+            }
+
+            Ft = 0;
+            if ((procedure === 'detailed' || procedure === 'dynamic') && T > 0.7) { Ft = Math.min(0.07 * T * V, 0.25 * V); }
+
+            let sum_wh = 0, cumulativeHeight = 0;
+            stories.forEach(story => {
+                cumulativeHeight += story.h; story.cumulativeHeight = cumulativeHeight;
+                sum_wh += story.w * story.cumulativeHeight;
+            });
+
+            stories.forEach(story => {
+                story.fx = (sum_wh > 0) ? (V - Ft) * (story.w * story.cumulativeHeight) / sum_wh : ((V-Ft) / stories.length);
+            });
+            if (stories.length > 0) { stories[stories.length-1].fx += Ft; }
+
+            displayResults({V, Ca, Cv, I, R, T, Ft, totalWeight, stories, procedure, governingEq, V_main, V_max, V_min1, V_min2, V_static, scaleFactor});
+        }
+        
+        function displayResults(params) {
+            const {V, Ca, Cv, T, Ft, totalWeight, stories, procedure, governingEq, V_main, V_max, V_min1, V_min2, V_static, scaleFactor} = params;
+            const baseShearDiv = document.getElementById('base_shear_results');
+            const lateralForceDiv = document.getElementById('lateral_force_results');
+            const detailedBreakdownDiv = document.getElementById('detailed_calculation_breakdown');
+            
+            let baseShearHTML = `<h3 class="text-xl font-semibold mb-3">Base Shear (V)</h3><div class="space-y-3 text-sm">`;
+            baseShearHTML += `<p class="flex justify-between"><span>Total Weight, W:</span><span class="font-medium">${totalWeight.toFixed(2)} kN</span></p>`;
+            baseShearHTML += `<p class="flex justify-between"><span>Seismic Coeff., Cₐ:</span><span class="font-medium">${Ca.toFixed(3)}</span></p>`;
+            if(procedure !== 'simplified') {
+                baseShearHTML += `<p class="flex justify-between"><span>Seismic Coeff., Cᵥ:</span><span class="font-medium">${Cv.toFixed(3)}</span></p>`;
+                baseShearHTML += `<p class="flex justify-between"><span>Period, T:</span><span class="font-medium">${T.toFixed(3)} s</span></p>`;
+            }
+            if(procedure === 'dynamic') {
+                 baseShearHTML += `<p class="flex justify-between"><span>Scale Factor:</span><span class="font-bold text-lg ${scaleFactor > 1 ? 'text-red-500' : 'text-green-600'}">${scaleFactor.toFixed(4)}</span></p>`;
+            }
+            baseShearHTML += `</div><hr class="my-4 border-gray-200"><div class="text-center"><p class="text-xs text-slate-500 mb-1">Governed by: ${governingEq}</p><p class="text-sm text-slate-500">Design Base Shear, V</p><p class="text-3xl font-bold text-blue-600">${V.toFixed(2)} kN</p></div>`;
+            baseShearDiv.innerHTML = baseShearHTML;
+            
+            let tableHTML = `<h3 class="text-xl font-semibold mb-3">Lateral Force Distribution</h3><div class="overflow-x-auto"><table class="w-full results-table text-sm"><thead><tr class="bg-gray-50 text-gray-600 font-semibold"><th>Level</th><th>wₓ (kN)</th><th>hₓ (m)</th><th class="text-right">Fₓ (kN)</th></tr></thead><tbody>`;
+            if (Ft > 0) { tableHTML += `<tr><td colspan="3" class="font-medium">Whiplash Force, Fₜ (at top)</td><td class="text-right font-medium">${Ft.toFixed(2)}</td></tr>`; }
+            for (let i = stories.length - 1; i >= 0; i--) {
+                const story = stories[i];
+                tableHTML += `<tr><td class="font-semibold">${story.level}</td><td>${story.w.toFixed(2)}</td><td>${story.cumulativeHeight.toFixed(2)}</td><td class="text-right font-bold text-blue-700">${story.fx.toFixed(2)}</td></tr>`;
+            }
+            tableHTML += `</tbody></table></div>`;
+            lateralForceDiv.innerHTML = tableHTML;
+            
+            if (procedure === 'detailed' || procedure === 'dynamic') {
+                let breakdownHTML = `<h3 class="text-xl font-semibold mb-4">Detailed Calculation Breakdown</h3><div class="space-y-4 text-sm">`;
+                breakdownHTML += `<div><h4 class="font-semibold text-gray-700">1. Static Base Shear Checks</h4><p class="ml-4">V (Eq. 208-8) = <span class="font-bold">${V_main.toFixed(2)} kN</span></p><p class="ml-4">Vₘₐₓ (Eq. 208-9) = <span class="font-bold">${V_max.toFixed(2)} kN</span></p><p class="ml-4">Vₘᵢₙ (Eq. 208-10) = <span class="font-bold">${V_min1.toFixed(2)} kN</span></p>`;
+                if (V_min2 > 0) { breakdownHTML += `<p class="ml-4">Vₘᵢₙ (Zone 4, Eq. 208-11) = <span class="font-bold">${V_min2.toFixed(2)} kN</span></p>`; }
+                 breakdownHTML += `<p class="ml-4 mt-2 border-t pt-2">Governing Static V = <span class="font-bold">${V_static.toFixed(2)} kN</span></p></div>`;
+
+                if (procedure === 'dynamic') {
+                    const Vb = parseFloat(document.getElementById('dynamic_base_shear').value) || 0;
+                    const regularity_factor = parseFloat(document.getElementById('regularity').value);
+                    const V_min_dynamic = regularity_factor * V_static;
+                    breakdownHTML += `<div><h4 class="font-semibold text-gray-700">2. Dynamic Scaling (Sec 208.5.3.4)</h4><p class="ml-4">Software Vb = <span class="font-bold">${Vb.toFixed(2)} kN</span></p><p class="ml-4">Required Min. V = ${regularity_factor*100}% of Static V = <span class="font-bold">${V_min_dynamic.toFixed(2)} kN</span></p>`;
+                     if (scaleFactor > 1) {
+                        breakdownHTML += `<p class="ml-4 text-red-600 font-semibold">Since Vb &lt; Required Min. V, scaling is required.</p>`;
+                    } else {
+                        breakdownHTML += `<p class="ml-4 text-green-600 font-semibold">Since Vb ≥ Required Min. V, no scaling is needed.</p>`;
+                    }
+                    breakdownHTML +=`</div>`;
+                }
+
+                breakdownHTML += `<div><h4 class="font-semibold text-gray-700">${procedure === 'dynamic' ? '3.' : '2.'} Whiplash Force (Fₜ)</h4>`;
+                if (T > 0.7) { breakdownHTML += `<p class="ml-4">Since T > 0.7s, Fₜ = 0.07*T*V = <span class="font-bold">${Ft.toFixed(2)} kN</span></p>`; } 
+                else { breakdownHTML += `<p class="ml-4">Since T &lt;= 0.7s, Fₜ = <span class="font-bold">0 kN</span></p>`; }
+                breakdownHTML += `</div></div>`;
+                detailedBreakdownDiv.innerHTML = breakdownHTML;
+                detailedBreakdownDiv.classList.remove('hidden');
+            } else {
+                detailedBreakdownDiv.classList.add('hidden');
+                detailedBreakdownDiv.innerHTML = '';
+            }
+            
+            document.getElementById('results_section').classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>
